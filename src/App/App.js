@@ -1,5 +1,5 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
-import Topbar from '../Topbar/Topbar';
+import Topbar from '../Components/Topbar/Topbar';
 import Home from '../Pages/Home/Home'
 import Schedule from '../Pages/Schedule/Schedule'
 import './App.css'

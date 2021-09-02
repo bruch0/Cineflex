@@ -3,7 +3,7 @@ import './Topbar.css'
 function Topbar() {
     return (
         <div className="Topbar">
-            CINEFLIX
+            CINEFLEX
         </div>
     )
 }
