@@ -1,0 +1,13 @@
+.Schedule {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 100px;
+}
+
+.Schedule p {
+    font-size: 24px;
+    color: #293845;
+    margin-bottom: 35px;
+}
