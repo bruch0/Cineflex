@@ -10,6 +10,7 @@ function Seats() {
     let params = useParams();
     const idSession = params.idSession;
     const [data, setData] = useState([]);
+    let [selectedSeats, setSelectedSeats] = useState([]);
 
     useEffect(() => {
         const requisicao = axios.get(
@@ -32,46 +33,58 @@ function Seats() {
     data.length === 0 ? seats = [] : seats = data.seats;
 
     return (
-        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} idMovie={idMovie} idSession={idSession} movieTitle={movieTitle} moviePoster={moviePoster} day={day}/>)
+        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} idMovie={idMovie} idSession={idSession} movieTitle={movieTitle} moviePoster={moviePoster} day={day} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats}/>)
     )
 }
 
-function RenderSeats(props) {
-    let [selected, setSelected] = useState('');
-    
-    function selectSeat() {
-        selected === '' ? setSelected('selected') : setSelected('');
-    }
-
+function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats}) {
     return(
         <main className="Seats">
             <p>Selecione os assentos</p>
 
             <div className="all-seats">
-                {props.seats.map((seat, index) => 
+                {seats.map((seat, index) => 
                     <Seat
                         number={seat.name}
                         isAvailable={seat.isAvailable}
-                        selected={selected}
-                        selectSeat={selectSeat}
+                        selectedSeats={selectedSeats}
+                        setSelectedSeats={setSelectedSeats}
                         key={index}
                     />
                 )}
             </div>
             <Description />
+            <div className="Buyer-info-container">
+                {selectedSeats.map(e => console.log('aaa'))}
+            </div>
             <MovieFooter 
-                image={props.moviePoster}
-                title={props.movieTitle}
-                day={props.day}
+                image={moviePoster}
+                title={movieTitle}
+                day={day}
             />
         </main>
     )
 }
 
-function Seat(props) {
+function Seat({number, isAvailable, selectedSeats, setSelectedSeats}) {
+    let [selected, setSelected] = useState('');
+    function selectSeat() {
+        if (selected === '') {
+            setSelected('selected');
+            setSelectedSeats([...selectedSeats, number]);
+            console.log(selectedSeats)
+        }
+        else {
+            setSelected('');
+            let x = (selectedSeats.indexOf(number))
+            selectedSeats.splice(x, 1)
+            setSelectedSeats(selectedSeats)
+        }
+    }
+
     return (
-        <button className={(props.isAvailable ? props.selected : 'unavailable')} onClick={props.selectSeat}>
-            {(props.number.length === 1 ? `0${props.number}` : props.number)}
+        <button className={(isAvailable ? selected : 'unavailable')} onClick={selectSeat}>
+            {(number.length === 1 ? `0${number}` : number)}
         </button>
     )
 }

@@ -24,41 +24,41 @@ function Schedule() {
     );
 }
 
-function RenderSchedule(props) {
+function RenderSchedule({sessions, idMovie}) {
     return (
         <main className="Schedule">
             <p>Selecione o horário</p>
 
             <div className="schedule-days">
-                {props.sessions.days.map((sessions, index) => 
+                {sessions.days.map((sessions, index) => 
                 <RenderAvaibleDays 
                     day={sessions.weekday}
                     date={sessions.date}
                     sessionss={sessions.showtimes}
-                    idMovie={props.idMovie}
+                    idMovie={idMovie}
                     key={index}
                 />
                 )}
             </div>
 
             <MovieFooter 
-                image={props.sessions.posterURL}
-                title={props.sessions.title}
+                image={sessions.posterURL}
+                title={sessions.title}
             />
         </main>
     )
 }
 
-function RenderAvaibleDays(props) {
+function RenderAvaibleDays({day, date, sessionss, idMovie}) {
     return (
         <div className="day">
-            <p>{`${props.day} - ${props.date}`}</p>
+            <p>{`${day} - ${date}`}</p>
             <div className="avaible-sessionss">
-                {props.sessionss.map((sessions, index) => 
+                {sessionss.map((sessions, index) => 
                     <Button 
                         name={sessions.name}
                         id={sessions.id}
-                        idMovie={props.idMovie}
+                        idMovie={idMovie}
                         key={index}
                     />
                 )}
@@ -67,11 +67,11 @@ function RenderAvaibleDays(props) {
     )
 }
 
-function Button(props) {
+function Button({name, id, idMovie}) {
     return (
-        <Link to={`${props.idMovie}/sessao/${props.id}`}>
+        <Link to={`${idMovie}/sessao/${id}`}>
             <button>
-                {props.name}
+                {name}
             </button>
         </Link>
     )
