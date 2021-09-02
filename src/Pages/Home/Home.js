@@ -1,8 +1,11 @@
 import './Home.css'
+import Loading from '../../Components/Loading/Loading'
+
 // import getAvaibleMovies from '../../Api/Api'
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+
 
 function Home() {
     let [movies, setMovies] = useState([]);
@@ -17,10 +20,16 @@ function Home() {
 	}
 
     return (
+        (movies.length === 0 ? <Loading /> : <RenderScreen movies={movies} />)
+    );
+}
+
+function RenderScreen(props) {
+    return (
         <main className="Home">
             <p>Selecione o filme</p>
             <div className="movies">
-                {movies.map((e, index) => 
+                {props.movies.map((e, index) => 
                 <RenderMovie
                     image={e.posterURL}
                     alt={e.title}
@@ -29,9 +38,9 @@ function Home() {
                 />)}
             </div>
         </main>
-    );
+    )
 }
-
+ 
 function RenderMovie(props) {
     return (
         <Link to={`/filme/${props.id}`}>
