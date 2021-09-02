@@ -1,0 +1,75 @@
+.Seats {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 85px;
+}
+
+.Seats > p {
+    font-size: 24px;
+    color: #293845;
+    margin-bottom: 35px;
+}
+
+.Seats .all-seats {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.Seats button {
+    width: 26px;
+    height: 26px;
+    border: 1px solid #808F9D;
+    background-color: #C3CFD9;
+    border-radius: 12px;
+    padding: 0px;
+    margin: 0px 8px 15px 0px;
+}
+
+.Seats .selected {
+    background-color: #8DD7CF;
+}
+
+.Seats .unavailable {
+    background-color: #FBE192;
+    pointer-events: none;
+}
+
+.Seats .description {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    font-size: 13px;
+}
+
+.Seats .description > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.Seats .description .preview {
+    width: 26px;
+    height: 26px;
+    border-radius: 12px;
+}
+
+.preview-available > .preview {
+    border: 1px solid #808F9D;
+    background-color: #C3CFD9;
+}
+
+.preview-selected > .preview {
+    border: 1px solid #8DD7CF;
+    background-color: #8DD7CF;
+}
+
+.preview-unavailable > .preview {
+    border: 1px solid #FBE192;
+    background-color: #FBE192;
+}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import axios from 'axios'
 
 import './Schedule.css'
@@ -8,41 +8,42 @@ import Loading from '../../Components/Loading/Loading'
 
 function Schedule() {
     let params = useParams();
-    const id = params.idFilme;
-    const [session, setSession] = useState([]);
+    const idMovie = params.idMovie;
+    const [sessions, setSessions] = useState([]);
 
     useEffect(() => {
         const requisicao = axios.get(
-        `https://mock-api.bootcamp.respondeai.com.br/api/v2/cineflex/movies/${id}/showtimes`
+        `https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/movies/${idMovie}/showtimes`
         );
 
-        requisicao.then(response => setSession(response.data));
-    }, [id]);
+        requisicao.then(response => setSessions(response.data));
+    }, [idMovie]);
     
     return (
-        (session.length === 0 ? <Loading /> : <RenderSchedule session={session} />)
+        (sessions.length === 0 ? <Loading /> : <RenderSchedule sessions={sessions} idMovie={idMovie}/>)
     );
 }
 
 function RenderSchedule(props) {
-    console.log(props.session.title)
     return (
         <main className="Schedule">
             <p>Selecione o horário</p>
-            
+
             <div className="schedule-days">
-                {props.session.days.map((session, index) => 
+                {props.sessions.days.map((sessions, index) => 
                 <RenderAvaibleDays 
-                    day={session.weekday}
-                    date={session.date}
-                    sessions={session.showtimes}
+                    day={sessions.weekday}
+                    date={sessions.date}
+                    sessionss={sessions.showtimes}
+                    idMovie={props.idMovie}
                     key={index}
                 />
                 )}
             </div>
+
             <MovieFooter 
-                image={props.session.posterURL}
-                title={props.session.title}
+                image={props.sessions.posterURL}
+                title={props.sessions.title}
             />
         </main>
     )
@@ -52,14 +53,27 @@ function RenderAvaibleDays(props) {
     return (
         <div className="day">
             <p>{`${props.day} - ${props.date}`}</p>
-            <div className="avaible-sessions">
-                {props.sessions.map((session,index) => 
-                    <button key={index}>
-                        {session.name}
-                    </button>
+            <div className="avaible-sessionss">
+                {props.sessionss.map((sessions, index) => 
+                    <Button 
+                        name={sessions.name}
+                        id={sessions.id}
+                        idMovie={props.idMovie}
+                        key={index}
+                    />
                 )}
             </div>
         </div>
+    )
+}
+
+function Button(props) {
+    return (
+        <Link to={`${props.idMovie}/sessao/${props.id}`}>
+            <button>
+                {props.name}
+            </button>
+        </Link>
     )
 }
 

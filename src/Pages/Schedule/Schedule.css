@@ -3,10 +3,10 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 100px;
+    padding-top: 85px;
 }
 
-.Schedule p {
+.Schedule > p {
     font-size: 24px;
     color: #293845;
     margin-bottom: 35px;
@@ -20,12 +20,12 @@
 }
 
 .Schedule .schedule-days .day {
-    margin-left: 20px;
+    margin: 20px 0px 0px 20px;
 }
 
 .Schedule .schedule-days .day p {
     font-size: 20px;
-    margin: 0px 0px 30px 0px;
+    margin: 0px 0px 20px 0px;
 }
 
 .Schedule .schedule-days .day button {
@@ -35,6 +35,9 @@
     margin-right: 8px;
     background: #E8833A;
     border-radius: 3px;
+    font-family: 'Roboto';
+    font-size: 18px;
+    color: white;
 }
 
 .Schedule .schedule-days .day .avaible-sessions {
