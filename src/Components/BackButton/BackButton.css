@@ -10,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
+    position: fixed;
     top: 13px;
     left: 13px;
     z-index: 1;

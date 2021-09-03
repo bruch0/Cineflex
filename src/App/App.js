@@ -20,7 +20,7 @@ function App() {
         <Route path="/filme/:idMovie/sessao/:idSession" exact>
           <Seats />
 				</Route>
-        <Route path="/sucesso" exact>
+        <Route path="/sucesso">
           <Success />
 				</Route>
 			</Switch>

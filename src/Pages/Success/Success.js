@@ -1,7 +1,6 @@
 import './Success.css';
 
 function Success(props) {
-    console.log(props)
     return (
         <main className="Success">
             <p>Pedido feito <br /> com sucesso!</p>
