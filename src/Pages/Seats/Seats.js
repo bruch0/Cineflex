@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { Link, useParams, useHistory, Prompt } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
+import Swal from 'sweetalert2'
 
 import './Seats.css';
 import { MovieFooter } from '../../Components/MovieFooter/MovieFooter';
@@ -41,11 +42,10 @@ function Seats() {
 
 function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, back}) {
     let [buyers, setBuyers] = useState([]);
-    let [isNotEmpty, setIsNotEmpty] = useState(false);
-    console.log(isNotEmpty)
     return(
         <>
         <BackButton back={back} />
+        
         <main className="Seats">
             <p>Selecione os assentos</p>
 
@@ -58,12 +58,11 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                         setSelectedSeats={setSelectedSeats}
                         buyers={buyers}
                         setBuyers={setBuyers}
-                        setIsNotEmpty={setIsNotEmpty}
                         key={index}
                     />
                 )}
             </div>
-            <Prompt message='Tem certeza que quer remover esse assento? O conteúdo será perdido' />
+            
             <Description />
             
             <div className="buyer-info-container">
@@ -93,7 +92,7 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
     )
 }
 
-function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, setBuyers, setIsNotEmpty}) {
+function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, setBuyers}) {
     let [selected, setSelected] = useState('');
     function selectSeat() {
         if (selected === '') {
@@ -104,14 +103,33 @@ function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, set
         else {
             let index = buyers.map(e => e.seat).indexOf(number);
             if (buyers[index].buyerName !== '' || buyers[index].buyerCpf !== '') {
-                prompt('aaa')
+                Swal.fire({
+                    title: 'Deseja remover esse assento?',
+                    text: 'Os dados inseridos serão perdidos',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonText: 'Sim, deletar',
+                    cancelButtonText: 'Cancelar'
+                  }).then((result) => {
+                      if (result.isConfirmed) {
+                        setSelected('');
+                        let x = (selectedSeats.indexOf(number));
+                        selectedSeats.splice(x, 1);
+                        setSelectedSeats([...selectedSeats]);
+                        buyers.splice(index, 1);
+                        setBuyers(buyers);
+                      }
+                  })
             }
-            setSelected('');
-            let x = (selectedSeats.indexOf(number));
-            selectedSeats.splice(x, 1);
-            setSelectedSeats([...selectedSeats]);
-            buyers.splice(index, 1);
-            setBuyers(buyers);
+            else {
+                setSelected('');
+                let x = (selectedSeats.indexOf(number));
+                selectedSeats.splice(x, 1);
+                setSelectedSeats([...selectedSeats]);
+                buyers.splice(index, 1);
+                setBuyers(buyers);
+            }
+            
         }
     }
 
