@@ -54,9 +54,10 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                 )}
             </div>
             <Description />
-            <div className="Buyer-info-container">
-                {selectedSeats.map(e => console.log('aaa'))}
+            <div className="buyer-info-container">
+                {selectedSeats.map((seat, index) => <BuyerInfo seat={seat} key={index}/>)}
             </div>
+            {selectedSeats.length !== 0 ? <Reserve /> : ''}
             <MovieFooter 
                 image={moviePoster}
                 title={movieTitle}
@@ -72,13 +73,12 @@ function Seat({number, isAvailable, selectedSeats, setSelectedSeats}) {
         if (selected === '') {
             setSelected('selected');
             setSelectedSeats([...selectedSeats, number]);
-            console.log(selectedSeats)
         }
         else {
             setSelected('');
             let x = (selectedSeats.indexOf(number))
             selectedSeats.splice(x, 1)
-            setSelectedSeats(selectedSeats)
+            setSelectedSeats([...selectedSeats])
         }
     }
 
@@ -105,6 +105,27 @@ function Description () {
                 <p>Indisponível</p>
             </div>
         </div>
+    )
+}
+
+function BuyerInfo({seat}) {
+    let [name, setName] = useState('');
+    let [cpf, setCpf] = useState('');
+    return (
+        <div className="buyer-info">
+            <p>Nome do comprador: (assento {seat})</p>
+            <input type="text" placeholder="Digite seu nome..." onChange={(e) => setName(e.target.value)} value={name}/>
+            <p>CPF do comprador:</p>
+            <input type="text" placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} value={cpf}/>
+        </div>
+    )
+}
+
+function Reserve() {
+    return (
+        <button className="reserve">
+            Reservar assento(s)
+        </button>
     )
 }
 
