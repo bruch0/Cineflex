@@ -1,9 +1,9 @@
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Topbar from '../Components/Topbar/Topbar';
-import Home from '../Pages/Home/Home'
+import Home from '../Pages/Home/Home';
 import Schedule from '../Pages/Schedule/Schedule'
-import Seats from '../Pages/Seats/Seats'
-
+import Seats from '../Pages/Seats/Seats';
+import Success from '../Pages/Success/Success'
 import './App.css'
 
 function App() {
@@ -20,8 +20,8 @@ function App() {
         <Route path="/filme/:idMovie/sessao/:idSession" exact>
           <Seats />
 				</Route>
-        <Route path="/filme/:idMovie/sessao/:idSession/sucesso" exact>
-          <Seats />
+        <Route path="/sucesso" exact>
+          <Success />
 				</Route>
 			</Switch>
 		</BrowserRouter>

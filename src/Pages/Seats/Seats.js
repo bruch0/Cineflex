@@ -79,7 +79,7 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                 })}
             </div>
 
-            {selectedSeats.length !== 0 ? <Reserve idMovie={idMovie} idSession={idSession}/> : ''}
+            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} day={day} selectedSeats={selectedSeats} buyers={buyers} /> : ''}
             
             <MovieFooter 
                 image={moviePoster}
@@ -163,9 +163,11 @@ function BuyerInfo({seat, buyers, setBuyers, access}) {
     )
 }
 
-function Reserve({idMovie, idSession}) {
+function Reserve(props) {
+    let x = props.movieTitle;
+    console.log(x)
     return (
-        <Link to={`${idMovie}/sessao/${idSession}/sucesso`}>
+        <Link to={{pathname: '/sucesso', state: { teste: x}}}>
             <button className="reserve">
                 Reservar assento(s)
             </button>

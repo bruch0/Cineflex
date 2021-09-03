@@ -1,0 +1,36 @@
+.Success {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 85px 0px 100px 0px;
+}
+
+.Success > p {
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    color: #247A6B;
+    text-align: center;
+}
+
+.Success .info-holder {
+    width: 90%;
+    margin-top: 60px;
+}
+
+.Success .info-holder > div {
+    margin-bottom: 40px;
+}
+
+.Success .info-holder span {
+    display: block;
+    font-weight: bold;
+    font-size: 24px;
+    margin-bottom: 12px;
+}
+
+.Success .info-holder p {
+    font-size: 20px;
+    margin-bottom: 7px;
+}
