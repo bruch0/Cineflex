@@ -14,15 +14,9 @@ function App() {
 				<Route path="/" exact>
           <Home />
 				</Route>
-        <Route path="/filme/:idMovie" exact>
-          <Schedule />
-				</Route>
-        <Route path="/filme/:idMovie/sessao/:idSession" exact>
-          <Seats />
-				</Route>
-        <Route path="/sucesso">
-          <Success />
-				</Route>
+        <Route path="/filme/:idMovie" exact component={Schedule} />
+        <Route path="/filme/:idMovie/sessao/:idSession" exact component={Seats} />
+        <Route path="/sucesso" component={Success} />
 			</Switch>
 		</BrowserRouter>
   );

@@ -23,24 +23,24 @@ function Seats() {
         requisicao.then(response => setData(response.data));
     }, [idSession]);
 
-    let idMovie = [];
     let seats =  [];
     let movieTitle = [];
     let moviePoster = [];
     let day = [];
+    let date = []
 
-    data.length === 0 ? idMovie = [] : idMovie = data.movie.id;
     data.length === 0 ? movieTitle = [] : movieTitle = data.movie.title;
     data.length === 0 ? moviePoster = [] : moviePoster = data.movie.posterURL;
-    data.length === 0 ? day = [] : day = `${data.day.weekday} - ${data.day.date}`;
+    data.length === 0 ? day = [] : day = `${data.day.weekday} - ${data.name}`;
+    data.length === 0 ? date = [] : date = `${data.day.date} - ${data.name}`;
     data.length === 0 ? seats = [] : seats = data.seats;
 
     return (
-        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} idMovie={idMovie} idSession={idSession} movieTitle={movieTitle} moviePoster={moviePoster} day={day} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} back={back.goBack}/>)
+        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} movieTitle={movieTitle} moviePoster={moviePoster} day={day} date={date} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} back={back.goBack}/>)
     )
 }
 
-function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, back}) {
+function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, date, back}) {
     let [buyers, setBuyers] = useState([]);
     return(
         <>
@@ -80,7 +80,7 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                 })}
             </div>
 
-            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} day={day} selectedSeats={selectedSeats} buyers={buyers} /> : ''}
+            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} date={date} selectedSeats={selectedSeats} buyers={buyers} /> : ''}
             
             <MovieFooter 
                 image={moviePoster}
@@ -187,11 +187,47 @@ function BuyerInfo({seat, buyers, setBuyers, access}) {
 }
 
 function Reserve(props) {
-    let x = props.movieTitle;
-    console.log(x)
+    let click;
+    let path;
+
+    function regexCPF(str) {
+        if(/^([0-9]){3}([0-9]){3}([0-9]){3}([0-9]){2}$/.test(str)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    function alertInvalidData() {
+        Swal.fire({
+            title: "Os dados informados são inválidos",
+            text: 'Insira apenas números no CPF',
+            icon: 'warning',
+            showCancelButton: false,
+            confirmButtonText: 'Ok',
+        })
+    }
+
+    let check = props.buyers.map((e) => regexCPF(e.buyerCpf));
+    
+    check.indexOf(false) !== -1 ? click = alertInvalidData : click = sendReservation;
+    check.indexOf(false) !== -1 ? path = '' : path = '/sucesso'
+
+    function sendReservation() {
+        let ids = props.selectedSeats.map((seat) => Number(seat))
+        let buyers = [];
+        props.buyers.map((buyer, index) => buyers.push({idAssento: ids[index], nome: buyer.buyerName, cpf: buyer.buyerCpf }))
+        let obj = 
+        {
+            ids: ids,
+            compradores: buyers
+        }
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', obj)
+    }
+
     return (
-        <Link to={{pathname: '/sucesso', state: { teste: x}}}>
-            <button className="reserve">
+        <Link to={{pathname: path, state: { props: props}}}>
+            <button className="reserve" onClick={click}>
                 Reservar assento(s)
             </button>
         </Link>
