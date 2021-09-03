@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, useHistory } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import './Seats.css';
@@ -40,6 +40,8 @@ function Seats() {
 }
 
 function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, back}) {
+    let [buyers, setBuyers] = useState([]);
+    
     return(
         <>
         <BackButton back={back} />
@@ -53,6 +55,8 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                         isAvailable={seat.isAvailable}
                         selectedSeats={selectedSeats}
                         setSelectedSeats={setSelectedSeats}
+                        buyers={buyers}
+                        setBuyers={setBuyers}
                         key={index}
                     />
                 )}
@@ -61,10 +65,21 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
             <Description />
             
             <div className="buyer-info-container">
-                {selectedSeats.map((seat, index) => <BuyerInfo seat={seat} key={index}/>)}
+                {selectedSeats.map((seat, index) => 
+                {
+                    return (
+                    <BuyerInfo
+                        seat={seat}
+                        buyers={buyers}
+                        setBuyers={setBuyers}
+                        access={index}
+                        key={index}
+                    />
+                    )
+                })}
             </div>
 
-            {selectedSeats.length !== 0 ? <Reserve /> : ''}
+            {selectedSeats.length !== 0 ? <Reserve idMovie={idMovie} idSession={idSession}/> : ''}
             
             <MovieFooter 
                 image={moviePoster}
@@ -76,18 +91,22 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
     )
 }
 
-function Seat({number, isAvailable, selectedSeats, setSelectedSeats}) {
+function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, setBuyers}) {
     let [selected, setSelected] = useState('');
     function selectSeat() {
         if (selected === '') {
             setSelected('selected');
             setSelectedSeats([...selectedSeats, number]);
+            setBuyers([...buyers,{buyerName: '', buyerCpf: '', seat: number}]);
         }
         else {
             setSelected('');
-            let x = (selectedSeats.indexOf(number))
-            selectedSeats.splice(x, 1)
-            setSelectedSeats([...selectedSeats])
+            let x = (selectedSeats.indexOf(number));
+            selectedSeats.splice(x, 1);
+            setSelectedSeats([...selectedSeats]);
+            let index = buyers.map(e => e.seat).indexOf(number);
+            buyers.splice(index, 1);
+            setBuyers(buyers);
         }
     }
 
@@ -117,24 +136,40 @@ function Description () {
     )
 }
 
-function BuyerInfo({seat}) {
-    let [name, setName] = useState('');
-    let [cpf, setCpf] = useState('');
+function BuyerInfo({seat, buyers, setBuyers, access}) {
+    function getBuyerName(e) {
+        let newBuyersArray = [...buyers];
+        let newBuyerName = {...newBuyersArray[access]};
+        newBuyerName.buyerName = e.target.value;
+        newBuyersArray[access] = newBuyerName
+        setBuyers(newBuyersArray)
+    }
+
+    function getBuyerCpf(e) {
+        let newBuyersArray = [...buyers];
+        let newBuyerCpf = {...newBuyersArray[access]};
+        newBuyerCpf.buyerCpf = e.target.value;
+        newBuyersArray[access] = newBuyerCpf
+        setBuyers(newBuyersArray)
+    }
+
     return (
         <div className="buyer-info">
             <p>Nome do comprador: (assento {seat})</p>
-            <input type="text" placeholder="Digite seu nome..." onChange={(e) => setName(e.target.value)} value={name}/>
+            <input type="text" placeholder="Digite seu nome..." onChange={(e) => getBuyerName(e)} value={buyers[access].buyerName} />
             <p>CPF do comprador:</p>
-            <input type="text" placeholder="Digite seu CPF..." onChange={(e) => setCpf(e.target.value)} value={cpf}/>
+            <input type="text" placeholder="Digite seu CPF..." onChange={(e) => getBuyerCpf(e)} value={buyers[access].buyerCpf}/>
         </div>
     )
 }
 
-function Reserve() {
+function Reserve({idMovie, idSession}) {
     return (
-        <button className="reserve">
-            Reservar assento(s)
-        </button>
+        <Link to={`${idMovie}/sessao/${idSession}/sucesso`}>
+            <button className="reserve">
+                Reservar assento(s)
+            </button>
+        </Link>
     )
 }
 

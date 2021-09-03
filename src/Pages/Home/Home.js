@@ -1,7 +1,6 @@
 import './Home.css'
 import Loading from '../../Components/Loading/Loading'
 
-// import getAvaibleMovies from '../../Api/Api'
 import { Link } from "react-router-dom";
 import { useState, useEffect } from 'react';
 import axios from 'axios';

@@ -62,7 +62,7 @@ function RenderAvaibleDays({day, date, sessionss, idMovie}) {
                 {sessionss.map((sessions, index) => 
                     <Button 
                         name={sessions.name}
-                        id={sessions.id}
+                        idSession={sessions.id}
                         idMovie={idMovie}
                         key={index}
                     />
@@ -72,9 +72,9 @@ function RenderAvaibleDays({day, date, sessionss, idMovie}) {
     )
 }
 
-function Button({name, id, idMovie}) {
+function Button({name, idSession, idMovie}) {
     return (
-        <Link to={`${idMovie}/sessao/${id}`}>
+        <Link to={`${idMovie}/sessao/${idSession}`}>
             <button>
                 {name}
             </button>

@@ -20,6 +20,9 @@ function App() {
         <Route path="/filme/:idMovie/sessao/:idSession" exact>
           <Seats />
 				</Route>
+        <Route path="/filme/:idMovie/sessao/:idSession/sucesso" exact>
+          <Seats />
+				</Route>
 			</Switch>
 		</BrowserRouter>
   );
