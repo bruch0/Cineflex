@@ -3,7 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding-top: 85px;
+    padding: 85px 0px 100px 0px;
 }
 
 .Seats > p {
@@ -44,6 +44,7 @@
     display: flex;
     justify-content: space-around;
     font-size: 13px;
+    margin-bottom: 45px;
 }
 
 .Seats .description > div {
@@ -59,17 +60,55 @@
     border-radius: 12px;
 }
 
-.preview-available > .preview {
+.Seats .preview-available > .preview {
     border: 1px solid #808F9D;
     background-color: #C3CFD9;
 }
 
-.preview-selected > .preview {
+.Seats .preview-selected > .preview {
     border: 1px solid #8DD7CF;
     background-color: #8DD7CF;
 }
 
-.preview-unavailable > .preview {
+.Seats .preview-unavailable > .preview {
     border: 1px solid #FBE192;
     background-color: #FBE192;
+}
+
+.Seats .buyer-info-container {
+    width: 100%;
+}
+
+.Seats .buyer-info-container .buyer-info {
+    margin-bottom: 25px;
+}
+
+.Seats .buyer-info-container p {
+    margin: 10px 0px 0px 0px;
+    color: #293845;
+    font-size: 18px;
+}
+
+.Seats .buyer-info-container .buyer-info input {
+    width: 100%;
+    height: 51px;
+    border: 1px solid #D4D4D4;
+    border-radius: 3px;
+    padding: 1px 15px;
+    font-size: 18px;
+}
+
+.Seats .buyer-info-container .buyer-info input:focus {
+    outline: none;
+}
+
+.Seats .reserve {
+    width: 70%;
+    height: 42px;
+    background-color: #E8833A;
+    color: #FFFFFF;
+    border: 0px;
+    border-radius: 3px;
+    margin-top: 30px;
+    font-size: 18px;
 }

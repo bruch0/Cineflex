@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useHistory } from 'react-router-dom';
 import axios from 'axios'
 
 import './Schedule.css'
 import { MovieFooter } from '../../Components/MovieFooter/MovieFooter'
+import BackButton from '../../Components/BackButton/BackButton'
 import Loading from '../../Components/Loading/Loading'
 
 function Schedule() {
+    let back = useHistory();
     let params = useParams();
     const idMovie = params.idMovie;
     const [sessions, setSessions] = useState([]);
@@ -20,12 +22,14 @@ function Schedule() {
     }, [idMovie]);
     
     return (
-        (sessions.length === 0 ? <Loading /> : <RenderSchedule sessions={sessions} idMovie={idMovie}/>)
+        (sessions.length === 0 ? <Loading /> : <RenderSchedule sessions={sessions} idMovie={idMovie} back={back.goBack}/>)
     );
 }
 
-function RenderSchedule({sessions, idMovie}) {
+function RenderSchedule({sessions, idMovie, back}) {
     return (
+        <>
+        <BackButton back={back}/>
         <main className="Schedule">
             <p>Selecione o horário</p>
 
@@ -46,6 +50,7 @@ function RenderSchedule({sessions, idMovie}) {
                 title={sessions.title}
             />
         </main>
+        </>
     )
 }
 

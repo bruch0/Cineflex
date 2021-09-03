@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 import './Seats.css';
 import { MovieFooter } from '../../Components/MovieFooter/MovieFooter';
+import BackButton from '../../Components/BackButton/BackButton'
 import Loading from '../../Components/Loading/Loading';
 
 function Seats() {
     let params = useParams();
+    let back = useHistory();
     const idSession = params.idSession;
     const [data, setData] = useState([]);
     let [selectedSeats, setSelectedSeats] = useState([]);
@@ -33,12 +35,14 @@ function Seats() {
     data.length === 0 ? seats = [] : seats = data.seats;
 
     return (
-        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} idMovie={idMovie} idSession={idSession} movieTitle={movieTitle} moviePoster={moviePoster} day={day} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats}/>)
+        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} idMovie={idMovie} idSession={idSession} movieTitle={movieTitle} moviePoster={moviePoster} day={day} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} back={back.goBack}/>)
     )
 }
 
-function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats}) {
+function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, back}) {
     return(
+        <>
+        <BackButton back={back} />
         <main className="Seats">
             <p>Selecione os assentos</p>
 
@@ -53,17 +57,22 @@ function RenderSeats({seats, idMovie, idSession, movieTitle, moviePoster, day, s
                     />
                 )}
             </div>
+
             <Description />
+            
             <div className="buyer-info-container">
                 {selectedSeats.map((seat, index) => <BuyerInfo seat={seat} key={index}/>)}
             </div>
+
             {selectedSeats.length !== 0 ? <Reserve /> : ''}
+            
             <MovieFooter 
                 image={moviePoster}
                 title={movieTitle}
                 day={day}
             />
         </main>
+        </>
     )
 }
 

@@ -7,7 +7,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 
-function Home() {
+function Home(props) {
+    console.log(props)
     let [movies, setMovies] = useState([]);
     
     useEffect(() => {
