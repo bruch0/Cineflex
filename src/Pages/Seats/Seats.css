@@ -14,9 +14,13 @@
     margin-bottom: 20px;
 }
 
+.Seats .all-seats-wrapper {
+    width: 100%;
+    display: grid;
+}
+
 .Seats .all-seats {
     width: 100%;
-    height: 50%;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
 }

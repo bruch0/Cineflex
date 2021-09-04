@@ -50,24 +50,24 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
         
         <main className="Seats">
             <p>Selecione os assentos</p>
-
-            <div className="all-seats">
-                {seats.map((seat, index) => 
-                    <Seat
-                        number={seat.name}
-                        id={seat.id}
-                        isAvailable={seat.isAvailable}
-                        selectedSeats={selectedSeats}
-                        setSelectedSeats={setSelectedSeats}
-                        selectedSeatsId={selectedSeatsId}
-                        setSelectedSeatsId={setSelectedSeatsId}
-                        buyers={buyers}
-                        setBuyers={setBuyers}
-                        key={index}
-                    />
-                )}
+            <div className="all-seats-wrapper">
+                <div className="all-seats">
+                    {seats.map((seat, index) => 
+                        <Seat
+                            number={seat.name}
+                            id={seat.id}
+                            isAvailable={seat.isAvailable}
+                            selectedSeats={selectedSeats}
+                            setSelectedSeats={setSelectedSeats}
+                            selectedSeatsId={selectedSeatsId}
+                            setSelectedSeatsId={setSelectedSeatsId}
+                            buyers={buyers}
+                            setBuyers={setBuyers}
+                            key={index}
+                        />
+                    )}
+                </div>
             </div>
-            
             <Description />
             
             <div className="buyer-info-container">
