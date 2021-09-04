@@ -232,7 +232,7 @@ function Reserve({movieTitle, date, selectedSeatsId, selectedSeats, buyers}) {
             ids: ids,
             compradores: buyers
         }
-        // axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', obj)
+        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', obj)
     }
 
     return (
