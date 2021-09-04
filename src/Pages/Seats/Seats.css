@@ -1,15 +1,17 @@
 .Seats {
+    width: 95%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 85px 0px 100px 0px;
+    padding: 100px 0px 115px 0px;
 }
 
 .Seats > p {
     font-size: 24px;
     color: #293845;
-    margin-bottom: 35px;
+    margin-bottom: 20px;
 }
 
 .Seats .all-seats {
@@ -17,8 +19,6 @@
     height: 50%;
     display: grid;
     grid-template-columns: repeat(10, 1fr);
-    flex-wrap: wrap;
-    justify-content: space-between;
 }
 
 .Seats button {
@@ -27,8 +27,8 @@
     border: 1px solid #808F9D;
     background-color: #C3CFD9;
     border-radius: 12px;
+    margin: 0px 0px 15px 16%;
     padding: 0px;
-    margin: 0px 8px 15px 0px;
 }
 
 .Seats .selected {
@@ -110,6 +110,6 @@
     color: #FFFFFF;
     border: 0px;
     border-radius: 3px;
-    margin-top: 30px;
+    margin: 30px 0px 0px 0px;
     font-size: 18px;
 }

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import './Success.css';
 
 function Success(props) {
-    const {movieTitle, date, selectedSeatsId, buyers} = props.location.state.props;
+    const {movieTitle, date, selectedSeats, buyers} = props.location.state;
     return (
         <main className="Success">
             <p>Pedido feito <br /> com sucesso!</p>
@@ -15,7 +15,7 @@ function Success(props) {
 
                 <div className="tickets">
                     <span>Ingresso(s)</span>
-                    {selectedSeatsId.map((seat, index) => <p key={index}>{`Assento ${seat}`}</p>)}
+                    {selectedSeats.map((seat, index) => <p key={index}>{`Assento ${seat}`}</p>)}
                 </div>
 
                 <div className="buyers">
@@ -24,7 +24,7 @@ function Success(props) {
                         return (
                             <div className='buyer' key={index}>
                                 <p>Nome: {buyer.buyerName}</p>
-                                <p>CPF: {buyer.buyerCpf}</p>
+                                <p>CPF: {`${buyer.buyerCpf.slice(0,3)}.${buyer.buyerCpf.slice(3, 6)}.${buyer.buyerCpf.slice(6, 9)}-${buyer.buyerCpf.slice(9, 11)}`}</p>
                             </div>
                         )
                     })}

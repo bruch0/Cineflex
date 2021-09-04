@@ -85,7 +85,7 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
                 })}
             </div>
 
-            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} date={date} selectedSeatsId={selectedSeatsId} buyers={buyers} /> : ''}
+            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} date={date} selectedSeatsId={selectedSeatsId} selectedSeats={selectedSeats} buyers={buyers} /> : ''}
             
             <MovieFooter 
                 image={moviePoster}
@@ -195,7 +195,7 @@ function BuyerInfo({seat, buyers, setBuyers, access}) {
     )
 }
 
-function Reserve(props) {
+function Reserve({movieTitle, date, selectedSeatsId, selectedSeats, buyers}) {
     let click;
     let path;
 
@@ -217,26 +217,27 @@ function Reserve(props) {
         })
     }
 
-    let check = props.buyers.map((e) => regexCPF(e.buyerCpf));
+    let check = buyers.map((e) => regexCPF(e.buyerCpf));
     
     check.indexOf(false) !== -1 ? click = alertInvalidData : click = sendReservation;
     check.indexOf(false) !== -1 ? path = '' : path = '/sucesso'
 
     function sendReservation() {
-        let ids = props.selectedSeatsId.map((seat) => Number(seat))
+        let ids = selectedSeatsId.map((seat) => Number(seat))
         let buyers = [];
-        props.buyers.map((buyer, index) => buyers.push({idAssento: ids[index], nome: buyer.buyerName, cpf: buyer.buyerCpf }))
+
+        buyers.map((buyer, index) => buyers.push({idAssento: ids[index], nome: buyer.buyerName, cpf: buyer.buyerCpf }))
         let obj = 
         {
             ids: ids,
             compradores: buyers
         }
-        axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', obj)
+        // axios.post('https://mock-api.bootcamp.respondeai.com.br/api/v3/cineflex/seats/book-many', obj)
     }
 
     return (
-        <Link to={{pathname: path, state: { props: props}}}>
-            <button className="reserve" onClick={click}>
+        <Link to={{pathname: path, state: { movieTitle: movieTitle, date: date, selectedSeats: selectedSeats, buyers: buyers }}}>
+            <button className="reserve" onClick={(click)}>
                 Reservar assento(s)
             </button>
         </Link>
