@@ -14,6 +14,7 @@ function Seats() {
     const idSession = params.idSession;
     const [data, setData] = useState([]);
     let [selectedSeats, setSelectedSeats] = useState([]);
+    let [selectedSeatsId, setSelectedSeatsId] = useState([]);
 
     useEffect(() => {
         const requisicao = axios.get(
@@ -36,12 +37,13 @@ function Seats() {
     data.length === 0 ? seats = [] : seats = data.seats;
 
     return (
-        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} movieTitle={movieTitle} moviePoster={moviePoster} day={day} date={date} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} back={back.goBack}/>)
+        (data.length === 0 ? <Loading /> : <RenderSeats seats={seats} movieTitle={movieTitle} moviePoster={moviePoster} day={day} date={date} setSelectedSeats={setSelectedSeats} selectedSeats={selectedSeats} selectedSeatsId={selectedSeatsId} setSelectedSeatsId={setSelectedSeatsId} back={back.goBack}/>)
     )
 }
 
-function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, date, back}) {
+function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, selectedSeats, selectedSeatsId, setSelectedSeatsId, date, back}) {
     let [buyers, setBuyers] = useState([]);
+    
     return(
         <>
         <BackButton back={back} />
@@ -53,9 +55,12 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
                 {seats.map((seat, index) => 
                     <Seat
                         number={seat.name}
+                        id={seat.id}
                         isAvailable={seat.isAvailable}
                         selectedSeats={selectedSeats}
                         setSelectedSeats={setSelectedSeats}
+                        selectedSeatsId={selectedSeatsId}
+                        setSelectedSeatsId={setSelectedSeatsId}
                         buyers={buyers}
                         setBuyers={setBuyers}
                         key={index}
@@ -80,7 +85,7 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
                 })}
             </div>
 
-            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} date={date} selectedSeats={selectedSeats} buyers={buyers} /> : ''}
+            {selectedSeats.length !== 0 ? <Reserve movieTitle={movieTitle} date={date} selectedSeatsId={selectedSeatsId} buyers={buyers} /> : ''}
             
             <MovieFooter 
                 image={moviePoster}
@@ -92,12 +97,14 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
     )
 }
 
-function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, setBuyers}) {
+function Seat({number, id, isAvailable, selectedSeats, setSelectedSeats, selectedSeatsId, setSelectedSeatsId, buyers, setBuyers}) {
     let [selected, setSelected] = useState('');
+
     function selectSeat() {
         if (selected === '') {
             setSelected('selected');
             setSelectedSeats([...selectedSeats, number]);
+            setSelectedSeatsId([...selectedSeatsId, id]);
             setBuyers([...buyers,{buyerName: '', buyerCpf: '', seat: number}]);
         }
         else {
@@ -126,6 +133,8 @@ function Seat({number, isAvailable, selectedSeats, setSelectedSeats, buyers, set
                 let x = (selectedSeats.indexOf(number));
                 selectedSeats.splice(x, 1);
                 setSelectedSeats([...selectedSeats]);
+                selectedSeatsId.splice(x, 1);
+                setSelectedSeatsId([...selectedSeatsId]);
                 buyers.splice(index, 1);
                 setBuyers(buyers);
             }
@@ -214,7 +223,7 @@ function Reserve(props) {
     check.indexOf(false) !== -1 ? path = '' : path = '/sucesso'
 
     function sendReservation() {
-        let ids = props.selectedSeats.map((seat) => Number(seat))
+        let ids = props.selectedSeatsId.map((seat) => Number(seat))
         let buyers = [];
         props.buyers.map((buyer, index) => buyers.push({idAssento: ids[index], nome: buyer.buyerName, cpf: buyer.buyerCpf }))
         let obj = 
