@@ -1,4 +1,4 @@
-.Home {
+.home {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -6,19 +6,19 @@
     padding-top: 100px;
 }
 
-.Home > p {
+.home > p {
     font-size: 24px;
     color: #293845;
     margin-bottom: 35px;
 }
 
-.Home .movies {
+.home .movies {
     display: flex;
     justify-content: space-evenly;
     flex-wrap: wrap;
 }
 
-.Home .movies img {
+.home .movies img {
     width: 145px;
     height: 209px;
     background: #FFFFFF;

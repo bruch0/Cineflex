@@ -2,7 +2,7 @@ import './Topbar.css'
 
 function Topbar() {
     return (
-        <div className="Topbar">
+        <div className="topbar">
             CINEFLEX
         </div>
     )

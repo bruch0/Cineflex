@@ -48,7 +48,7 @@ function RenderSeats({seats, movieTitle, moviePoster, day, setSelectedSeats, sel
         <>
         <BackButton back={back} />
         
-        <main className="Seats">
+        <main className="seats">
             <p>Selecione os assentos</p>
             <div className="all-seats-wrapper">
                 <div className="all-seats">

@@ -4,7 +4,7 @@ import './Success.css';
 function Success(props) {
     const {movieTitle, date, selectedSeats, buyers} = props.location.state;
     return (
-        <main className="Success">
+        <main className="success">
             <p>Pedido feito <br /> com sucesso!</p>
             <div className="info-holder">
                 <div className="movie-info">

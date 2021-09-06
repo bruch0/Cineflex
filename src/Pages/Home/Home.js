@@ -25,7 +25,7 @@ function Home() {
 
 function RenderScreen(props) {
     return (
-        <main className="Home">
+        <main className="home">
             <p>Selecione o filme</p>
             <div className="movies">
                 {props.movies.map((e, index) => 
