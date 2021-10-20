@@ -20,7 +20,7 @@ um gif da aplicação bem maneiro -->
 
 ## Deployment 🚀
 
-<p align="center"><a  href="https://cineflex-wheat.vercel.app/">linkr-pi.vercel.app/</a></p>
+<p align="center"><a  href="https://cineflex-wheat.vercel.app/">Check it here!/</a></p>
 
 </br>
 
